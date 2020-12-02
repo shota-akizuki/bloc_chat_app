@@ -18,8 +18,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              height: 200.0,
-              child: Image.asset('images/logo.png'),
+              height: 50.0,
             ),
             SizedBox(
               height: 48.0,
@@ -29,7 +28,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 //Do something with the user input.
               },
               decoration: InputDecoration(
-                hintText: 'Enter your email',
+                hintText: 'メールアドレス',
+                hintStyle: TextStyle(fontSize: 16.0, color: Colors.grey),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 border: OutlineInputBorder(
@@ -53,7 +53,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 //Do something with the user input.
               },
               decoration: InputDecoration(
-                hintText: 'Enter your password',
+                hintText: 'パスワード',
+                hintStyle: TextStyle(fontSize: 16.0, color: Colors.grey),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 border: OutlineInputBorder(
@@ -85,7 +86,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   minWidth: 200.0,
                   height: 42.0,
                   child: Text(
-                    'Register',
+                    '登録',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

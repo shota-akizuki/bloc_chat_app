@@ -1,4 +1,7 @@
+import 'package:bloc_chat_app/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'welcome_screen';
@@ -39,12 +42,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 borderRadius: BorderRadius.circular(30.0),
                 child: MaterialButton(
                   onPressed: () {
-                    //Go to login screen.
+                    Navigator.of(context).pushNamed(LoginScreen.id);
                   },
                   minWidth: 200.0,
                   height: 42.0,
                   child: Text(
-                    'Log In',
+                    'ログイン',
                   ),
                 ),
               ),
@@ -57,12 +60,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
-                    //Go to registration screen.
+                    Navigator.of(context).pushNamed(RegistrationScreen.id);
                   },
                   minWidth: 200.0,
                   height: 42.0,
                   child: Text(
-                    'Register',
+                    '新規登録',
                   ),
                 ),
               ),

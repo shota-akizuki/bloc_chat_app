@@ -12,10 +12,10 @@ class ChatApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-        textTheme: TextTheme(
-          bodyText1: TextStyle(color: Colors.black54),
-        ),
-      ),
+          textTheme: TextTheme(
+            bodyText1: TextStyle(color: Colors.black54),
+          ),
+          primaryColor: Colors.blue),
       initialRoute: WelcomeScreen.id,
       routes: <String, WidgetBuilder>{
         WelcomeScreen.id: (BuildContext context) => WelcomeScreen(),

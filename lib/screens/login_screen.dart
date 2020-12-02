@@ -18,8 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              height: 200.0,
-              child: Image.asset('images/logo.png'),
+              height: 50.0,
             ),
             SizedBox(
               height: 48.0,
@@ -29,7 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 //Do something with the user input.
               },
               decoration: InputDecoration(
-                hintText: 'Enter your email',
+                hintText: 'メールアドレス',
+                hintStyle: TextStyle(fontSize: 16.0, color: Colors.grey),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 border: OutlineInputBorder(
@@ -55,7 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 //Do something with the user input.
               },
               decoration: InputDecoration(
-                hintText: 'Enter your password.',
+                hintText: 'パスワード',
+                hintStyle: TextStyle(fontSize: 16.0, color: Colors.grey),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 border: OutlineInputBorder(
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   minWidth: 200.0,
                   height: 42.0,
                   child: Text(
-                    'Log In',
+                    'ログイン',
                   ),
                 ),
               ),
