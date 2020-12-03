@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'chat_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,6 +12,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   String email;
   String password;
+  String infoText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +96,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: MaterialButton(
                   onPressed: () async {
                     try {
-                      final newUser =
-                          await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
-                      if (newUser != null) {
+                      final loggedInUser =
+                          await _auth.signInWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
+                      if (loggedInUser != null) {
                         Navigator.of(context).pushNamed(ChatScreen.id);
                       }
                     } catch (e) {
