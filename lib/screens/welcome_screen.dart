@@ -26,7 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 'Bloc Chat App',
                 style: TextStyle(
                   fontSize: 30.0,
-                  color: Colors.grey,
+                  color: Colors.grey[800],
                   fontWeight: FontWeight.w900,
                 ),
               ),
