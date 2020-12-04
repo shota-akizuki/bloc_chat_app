@@ -1,9 +1,11 @@
+import 'package:bloc_chat_app/components/message_bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
 final _fireStore = FirebaseFirestore.instance;
+User loggedInUser;
 
 class ChatScreen extends StatefulWidget {
   static String id = 'chat_screen';
@@ -14,8 +16,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final messagesTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-
-  User loggedInUser;
   String messageText;
 
   @override
@@ -52,9 +52,8 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.account_circle),
               onPressed: () {
-                // _auth.signOut();
-                // Navigator.pop(context);
-                messageStream();
+                _auth.signOut();
+                Navigator.pop(context);
               }),
         ],
         title: Text(
@@ -86,7 +85,11 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () {
                       messagesTextController.clear();
                       _fireStore.collection('messages').add(
-                        {'text': messageText, 'sender': loggedInUser.email},
+                        {
+                          'text': messageText,
+                          'sender': loggedInUser.email,
+                          'timeStamp': FieldValue.serverTimestamp(),
+                        },
                       );
                     },
                     child: Icon(Icons.send),
@@ -105,7 +108,10 @@ class MessageStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _fireStore.collection('messages').snapshots(),
+      stream: _fireStore
+          .collection('messages')
+          .orderBy('timeStamp', descending: false)
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -114,14 +120,18 @@ class MessageStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data.docs;
+        final messages = snapshot.data.docs.reversed;
         List<MessageBubble> messageBubbles = [];
         for (var message in messages) {
           final messageText = message.data()['text'];
           final messageSender = message.data()['sender'];
+          final currentUser = loggedInUser.email;
+          final timeStamp = message.data()['timeStamp'];
           final messageBubble = MessageBubble(
             text: messageText,
             sender: messageSender,
+            timeStamp: timeStamp,
+            isMe: currentUser == messageSender,
           );
           messageBubbles.add(messageBubble);
         }
@@ -129,45 +139,12 @@ class MessageStream extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
             child: ListView(
+              reverse: true,
               children: messageBubbles,
             ),
           ),
         );
       },
-    );
-  }
-}
-
-class MessageBubble extends StatelessWidget {
-  String text;
-  String sender;
-  MessageBubble({this.text, this.sender});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            '$sender',
-            style: TextStyle(fontSize: 12, color: Colors.black54),
-          ),
-          Material(
-            borderRadius: BorderRadius.circular(30.0),
-            elevation: 5.0,
-            color: Colors.lightBlueAccent,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-              child: Text(
-                '$text',
-                style: TextStyle(fontSize: 15, color: Colors.white),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
