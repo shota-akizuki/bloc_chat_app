@@ -1,4 +1,4 @@
-# bloc_chat_app
+# flutter_chat_app
 
 A new Flutter application.
 
